@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { GameField } from './Game.styles';
 import { Card } from '..';
 import { imgAPI } from '../../services/ImgService';
+import { ServiceAPI,imgDataAPI} from '../../services/Service.interface';
 import { ICard } from '../Card/Card.props';
 import { createGameField } from '../../utils/utils';
 import { RootState } from '../../store';
-import { changeGameState, incrementFoundPairs,choseCard} from '../../store/slices/game.slice';
+import { incrementFoundPairs,choseCard, firstGameEnded} from '../../store/slices/game.slice';
 import { changeTimerState } from '../../store/slices/timer.slice';
 import { addResult } from '../../store/slices/results.slice';
 
@@ -15,24 +16,55 @@ export const Game: React.FC = (): JSX.Element => {
 	const [timeout, setClearTimeout] = useState<NodeJS.Timer>(0 as unknown as NodeJS.Timer);
 	const chosenCard = useSelector((state: RootState) => state.gameState.chosenCard);
 	const pairsFound = useSelector((state: RootState) => state.gameState.pairsFound);
+	const gameId = useSelector((state: RootState) => state.gameState.id);
 	const elapsedTime = useSelector((state: RootState) => state.timerState.elapsedTime);
+	//const cards = useSelector((state: RootState) => state.gameState.Cards);
+
 	const dispatch = useDispatch();
-	
+
 	useEffect(() => {
-		const loadCards = async() => {
-			const res = await imgAPI.getPhotos(18);
-			setCards(createGameField(res));	
+		const loadCards = async(service:ServiceAPI<imgDataAPI[]>) => {
+			const res = await service.getPhotos(18);
+			setCards(createGameField(res));
 		};
-		loadCards();
-	}, []);
+		loadCards(imgAPI);
+	}, [gameId]);
 
 	useEffect(() => {
 		if (pairsFound === cards.length / 2 && pairsFound!==0) {
-			dispatch(changeGameState());
 			dispatch(changeTimerState());
+			dispatch(firstGameEnded());
 			dispatch(addResult({seconds:elapsedTime,id:Date.now()}));
 		}
 	}, [pairsFound]);
+
+	// const handleCardClick = (card: ICard) => {
+	// 	dispatch(flipCard(card));
+
+	// 	if (chosenCard === undefined) {
+	// 		setClearTimeout(setTimeout(() => {
+	// 			dispatch(flipCardBack(card));
+	// 			dispatch(choseCard(undefined));}
+	// 		, 5000));
+	// 		dispatch(choseCard(card));
+	// 		return;
+	// 	}
+		
+	// 	clearTimeout(timeout);
+	// 	if (chosenCard.pairId === card.pairId && card.id!=chosenCard.id) {
+	// 		dispatch(flipPairsBack(card));
+	// 		dispatch(incrementFoundPairs());
+	// 		dispatch(choseCard(undefined));
+
+	// 		return;
+	// 	}
+
+	// 	setTimeout(() => {
+	// 		dispatch(flipDifferentBack(card));
+	// 	}, 800);
+
+	// 	dispatch(choseCard(undefined));
+	// };
 
 
 	const handleCardClick = useCallback((card: ICard) => {
@@ -94,62 +126,3 @@ export const Game: React.FC = (): JSX.Element => {
 		</>
 	);
 };
-/*
-	const [timeout, setClearTimeout] = useState<NodeJS.Timer>(0 as unknown as NodeJS.Timer);
-	const chosenCard = useSelector((state: RootState) => state.gameState.chosenCard);
-	const pairsFound = useSelector((state: RootState) => state.gameState.pairsFound);
-	const cards = useSelector((state: RootState) => state.gameState.Cards);
-
-	const dispatch = useDispatch();
-
-	useEffect(() => {
-		imgAPI
-			.getPhotos(18)
-			.then((data) => dispatch(setCards(shuffleArray(createBoard(data)))));
-	}, []);
-
-	useEffect(() => {
-		if (pairsFound === cards.length / 2 && pairsFound!==0) {
-			dispatch(changeGameState());
-			dispatch(changeTimerState());
-		}
-	}, [pairsFound]);
-
-
-	const handleCardClick = (card: ICard) => {
-		
-		dispatch(setCards(
-			cards.map((prevcard: ICard) =>
-				(prevcard.id === card.id ? { ...prevcard, isFlipped: true } : prevcard))
-		));
-
-		if (chosenCard === undefined) {
-			setClearTimeout(setTimeout(() => {
-
-				dispatch(setCards(
-					cards.map((prevcard: ICard) =>
-						(prevcard.id === card.id ? { ...prevcard, isFlipped: false } : prevcard))
-				));
-			
-				dispatch(choseCard(undefined));
-			}, 5000));
-			
-			dispatch(choseCard(card));
-			return;
-		}
-		
-		clearTimeout(timeout);
-		if (chosenCard.pairId === card.pairId && card.id!=chosenCard.id) {
-			dispatch(
-				setCards(
-					cards.map((prevCard: ICard) =>
-						(prevCard.pairId === card.pairId ? { ...prevCard, isFlipped: false } : prevCard))
-				));
-			dispatch(incrementFoundPairs());
-			dispatch(choseCard(undefined));
-
-			return;
-		}
-
-
-*/ 
