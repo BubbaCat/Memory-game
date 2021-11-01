@@ -25,7 +25,9 @@ export const Card:React.FC<CardProps> = ({card, handleClick}:CardProps): JSX.Ele
 	return (									
 		<CardWrapper 
 			tabIndex={0} 
-			onKeyDown={(e)=>handleKeyDown(e)} onClick={handleImgClick} isVisible={isVisible} >
+			onKeyDown={(e)=>handleKeyDown(e)} 
+			onClick={handleImgClick} 
+			isVisible={isVisible} >
 			<FrontImg 
 				isFlipped={isFlipped} 
 				src={frontImgUrl} 

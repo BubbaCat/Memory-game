@@ -20,7 +20,7 @@ export const ResultHeader = styled.div`
 	`;	
 export const Result = styled.div`
 	width:100%;
-	padding:10px 0;
+	padding:10px 0 6px 0;
 	text-align:center;
 	font-size:20px;
 	border-bottom:1px solid black;
