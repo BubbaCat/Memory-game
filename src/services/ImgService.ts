@@ -1,16 +1,6 @@
-export interface imgDataAPI {
-	id:string;
-	alt_description?:string;
-	urls: {
-		regular:string;
-	}
-}
+import { ServiceAPI,imgDataAPI } from './Service.interface';
 
-export interface ServiceAPI<T>{
-	readonly _apiBaseUrl:string;
-	getResource:(url:string)=>Promise<Response>;
-	getPhotos:(amount:number)=>Promise<T>;
-}
+
 
 export class ImgService<T> implements ServiceAPI<T>{
 	public readonly _apiBaseUrl:string;
