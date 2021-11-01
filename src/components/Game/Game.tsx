@@ -18,7 +18,6 @@ export const Game: React.FC = (): JSX.Element => {
 	const pairsFound = useSelector((state: RootState) => state.gameState.pairsFound);
 	const gameId = useSelector((state: RootState) => state.gameState.id);
 	const elapsedTime = useSelector((state: RootState) => state.timerState.elapsedTime);
-	//const cards = useSelector((state: RootState) => state.gameState.Cards);
 
 	const dispatch = useDispatch();
 
@@ -37,35 +36,6 @@ export const Game: React.FC = (): JSX.Element => {
 			dispatch(addResult({seconds:elapsedTime,id:Date.now()}));
 		}
 	}, [pairsFound]);
-
-	// const handleCardClick = (card: ICard) => {
-	// 	dispatch(flipCard(card));
-
-	// 	if (chosenCard === undefined) {
-	// 		setClearTimeout(setTimeout(() => {
-	// 			dispatch(flipCardBack(card));
-	// 			dispatch(choseCard(undefined));}
-	// 		, 5000));
-	// 		dispatch(choseCard(card));
-	// 		return;
-	// 	}
-		
-	// 	clearTimeout(timeout);
-	// 	if (chosenCard.pairId === card.pairId && card.id!=chosenCard.id) {
-	// 		dispatch(flipPairsBack(card));
-	// 		dispatch(incrementFoundPairs());
-	// 		dispatch(choseCard(undefined));
-
-	// 		return;
-	// 	}
-
-	// 	setTimeout(() => {
-	// 		dispatch(flipDifferentBack(card));
-	// 	}, 800);
-
-	// 	dispatch(choseCard(undefined));
-	// };
-
 
 	const handleCardClick = useCallback((card: ICard) => {
 		setCards((prevState): ICard[] =>
