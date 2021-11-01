@@ -27,13 +27,13 @@ export const Card:React.FC<CardProps> = ({card, handleClick}:CardProps): JSX.Ele
 			tabIndex={0} 
 			onKeyDown={(e)=>handleKeyDown(e)} 
 			onClick={handleImgClick} 
-			isVisible={isVisible} >
+			isVisible={isVisible}>
 			<FrontImg 
-				isFlipped={true} 
+				isFlipped={isFlipped} 
 				src={frontImgUrl} 
 				alt={alt_description || `Front image ${card.pairId}`}/>
 			<BackImg 
-				isFlipped={true} 
+				isFlipped={isFlipped} 
 				src={backImgUrl || BackImgLocal}
 				alt={'Back image'}/>
 		</CardWrapper>
