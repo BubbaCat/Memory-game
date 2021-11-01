@@ -1,8 +1,6 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
 import { Container,ResultHeader,Result} from '../GameResults/GameResults.styles';
-import { ResultProps } from '../Header/Header.props';
+import { ResultProps } from './GameResults.props';
 
 export const GameResults:React.FC<ResultProps>=({title,results}:ResultProps)=>{
 	const renderResults=()=>{

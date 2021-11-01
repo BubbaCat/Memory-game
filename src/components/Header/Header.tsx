@@ -41,8 +41,8 @@ export const Header:React.FC = () => {
 				onClose={onClose}
 				title={'Результаты'}>
 				<GameResults 
-				title={"Количество секунд"}
-				results={[...results].sort((a,b) => a.seconds-b.seconds)}
+					title={'Количество секунд'}
+					results={[...results].sort((a,b) => a.seconds-b.seconds)}
 				/>
 			</MainPopup>
 			<Button 
