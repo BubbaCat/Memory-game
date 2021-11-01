@@ -14,7 +14,8 @@ export const Header:React.FC = () => {
 	const timerIsActive= useSelector((state:RootState)=>state.timerState.isActive);
 	const timerElapsedTime = useSelector((state:RootState)=>state.timerState.elapsedTime);
 	const isFirstGame = useSelector((state:RootState)=>state.gameState.isFirstGame);
-	
+	const results = useSelector((state: RootState) => state.resultState.results);
+
 	const startGame=()=>{	
 		dispatch(reset());
 		dispatch(changeGameState());
@@ -39,7 +40,10 @@ export const Header:React.FC = () => {
 				isOpened={showResult}
 				onClose={onClose}
 				title={'Результаты'}>
-				<GameResults />
+				<GameResults 
+				title={"Количество секунд"}
+				results={[...results].sort((a,b) => a.seconds-b.seconds)}
+				/>
 			</MainPopup>
 			<Button 
 				value={`${!timerIsActive ? 'Старт' : 'Начать заново'}`} 

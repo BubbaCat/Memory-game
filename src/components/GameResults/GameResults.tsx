@@ -2,13 +2,11 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { Container,ResultHeader,Result} from '../GameResults/GameResults.styles';
+import { ResultProps } from '../Header/Header.props';
 
-export const GameResults:React.FC=()=>{
-	const results = useSelector((state: RootState) => state.resultState.results);
-
+export const GameResults:React.FC<ResultProps>=({title,results}:ResultProps)=>{
 	const renderResults=()=>{
-		const filteredResults = [...results].sort((a,b) => a.seconds-b.seconds);
-		return filteredResults.map(result =>
+		return results.map(result =>
 			(<Result 
 				key={result.id}>
 				{result.seconds}
@@ -19,7 +17,7 @@ export const GameResults:React.FC=()=>{
 	return (
 		<Container>
 			<ResultHeader>
-				Количество секунд
+				{title}
 			</ResultHeader>
 			{renderResults()}
 		</Container>

@@ -1,4 +1,4 @@
 export interface TimerProps {
-	isActive:boolean,
-	elapsedTime:number
+	isActive:boolean;
+	elapsedTime:number;
 }
