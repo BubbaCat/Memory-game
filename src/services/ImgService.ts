@@ -6,7 +6,13 @@ export interface imgDataAPI {
 	}
 }
 
-export class ImgService<T> {
+export interface ServiceAPI<T>{
+	readonly _apiBaseUrl:string;
+	getResource:(url:string)=>Promise<Response>;
+	getPhotos:(amount:number)=>Promise<T>;
+}
+
+export class ImgService<T> implements ServiceAPI<T>{
 	public readonly _apiBaseUrl:string;
 
 	constructor() {
