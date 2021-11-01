@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
 interface imgProps {
-	isFlipped:boolean,
+	isFlipped:boolean;
 }
 
 interface wrapperProps {
-	isVisible:boolean
+	isVisible:boolean;
 }
 
 export const CardWrapper = styled.div<wrapperProps>`
