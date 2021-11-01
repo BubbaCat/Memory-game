@@ -2,8 +2,8 @@ import React, { KeyboardEvent, MouseEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, GameResults, MainPopup } from '..';
 import { RootState } from '../../store';
-import { changeGameState } from '../../store/slices/game.slice';
-import { changeTimerState } from '../../store/slices/timer.slice';
+import { changeGameState, restartGame } from '../../store/slices/game.slice';
+import { changeTimerState, reset } from '../../store/slices/timer.slice';
 import { Timer } from '../Timer/Timer';
 import { Wrapper } from './Header.styles';
 
@@ -13,16 +13,21 @@ export const Header:React.FC = () => {
 	const dispatch = useDispatch();
 	const timerIsActive= useSelector((state:RootState)=>state.timerState.isActive);
 	const timerElapsedTime = useSelector((state:RootState)=>state.timerState.elapsedTime);
-	const gameIsActive = useSelector((state:RootState)=>state.gameState.isPlayable);
-
-	const startGame=()=>{
-		if(gameIsActive) {
-			return;
-		}
+	const isFirstGame = useSelector((state:RootState)=>state.gameState.isFirstGame);
+	
+	const startGame=()=>{	
+		dispatch(reset());
 		dispatch(changeGameState());
 		dispatch(changeTimerState());
 	};
+	
+	const restart=()=>{	
+		dispatch(reset());
+		dispatch(restartGame());
+		dispatch(changeTimerState());
 
+	};
+	
 	const onClose = (e:MouseEvent|KeyboardEvent)=>{
 		e.stopPropagation();
 		setShowResult(false);
@@ -38,7 +43,7 @@ export const Header:React.FC = () => {
 			</MainPopup>
 			<Button 
 				value={`${!timerIsActive ? 'Старт' : 'Начать заново'}`} 
-				onClick={startGame} 
+				onClick={timerIsActive || !isFirstGame ? restart : startGame} 
 				color 
 			/>
 			<Timer 
