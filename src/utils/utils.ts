@@ -1,4 +1,4 @@
-import { imgDataAPI } from './../services/ImgService';
+import { imgDataAPI } from './../services/Service.interface';
 import {  ICard } from '../components/Card/Card.props';
 
 export function shuffleArray<T>(arr: T[]): T[] {

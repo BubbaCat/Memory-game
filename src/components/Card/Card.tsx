@@ -29,11 +29,11 @@ export const Card:React.FC<CardProps> = ({card, handleClick}:CardProps): JSX.Ele
 			onClick={handleImgClick} 
 			isVisible={isVisible} >
 			<FrontImg 
-				isFlipped={isFlipped} 
+				isFlipped={true} 
 				src={frontImgUrl} 
 				alt={alt_description || `Front image ${card.pairId}`}/>
 			<BackImg 
-				isFlipped={isFlipped} 
+				isFlipped={true} 
 				src={backImgUrl || BackImgLocal}
 				alt={'Back image'}/>
 		</CardWrapper>

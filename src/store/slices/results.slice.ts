@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-
 export interface Result {
 	seconds:number;
 	id:number;
@@ -23,7 +22,6 @@ const resultSlice = createSlice({
 		},
 	}
 });
-
 
 export const {addResult} = resultSlice.actions;
 

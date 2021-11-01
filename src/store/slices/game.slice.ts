@@ -1,4 +1,4 @@
-import { imgDataAPI } from './../../services/ImgService';
+import { imgDataAPI } from './../../services/Service.interface';
 import { ICard } from './../../components/Card/Card.props';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { imgAPI } from '../../services/ImgService';
